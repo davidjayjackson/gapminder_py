@@ -1,0 +1,74 @@
+---
+title: "Gapminder GDP Analysis for EU"
+format: dashboard
+toc: true
+jupyter: python3
+echo: false
+---
+```{python}
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from gapminder import gapminder
+
+```
+
+```{python}
+data = gapminder
+# List of current EU member states
+eu_countries = [
+    "Austria", "Belgium", "Bulgaria", "Croatia", "Cyprus", "Czech Republic", "Denmark", 
+    "Estonia", "Finland", "France", "Germany", "Greece", "Hungary", "Ireland", "Italy", 
+    "Latvia", "Lithuania", "Luxembourg", "Malta", "Netherlands", "Poland", "Portugal", 
+    "Romania", "Slovak Republic", "Slovenia", "Spain", "Sweden"
+]
+
+# Filter the dataset for EU countries
+eu_data = data[data['country'].isin(eu_countries)]
+
+```
+# Distribution of GDP Per Capita
+```{python}
+sns.histplot(x='gdpPercap',data=eu_data)
+```
+```{python}
+sns.boxplot(x='gdpPercap',data=eu_data)
+```
+
+# The Tale of the Tape
+
+```{python}
+import pandas as pd
+from gapminder import gapminder
+import plotly.express as px
+
+# # Load the Gapminder dataset
+# data = gapminder
+
+# # List of current EU member states
+# eu_countries = [
+#     "Austria", "Belgium", "Bulgaria", "Croatia", "Cyprus", "Czech Republic", "Denmark",
+#     "Estonia", "Finland", "France", "Germany", "Greece", "Hungary", "Ireland", "Italy",
+#     "Latvia", "Lithuania", "Luxembourg", "Malta", "Netherlands", "Poland", "Portugal",
+#     "Romania", "Slovak Republic", "Slovenia", "Spain", "Sweden"
+# ]
+
+# Filter the dataset for EU countries
+eu_data = data[data['country'].isin(eu_countries)]
+
+# Create a Plotly scatter plot
+fig = px.scatter(
+    eu_data,
+    x="gdpPercap",  # GDP per capita
+    y="lifeExp",    # Life expectancy
+    size="pop",     # Population size as bubble size
+    color="country", # Color by country
+    hover_name="country", # Show country name on hover
+    animation_frame="year", # Animation by year
+    title="EU Countries: GDP per Capita vs Life Expectancy",
+    labels={"gdpPercap": "GDP per Capita", "lifeExp": "Life Expectancy"},
+)
+
+# Show the plot
+fig.show()
+```
